@@ -1347,6 +1347,7 @@ class Player extends Component {
   play() {
     // Only calls the tech's play if we already have a src loaded
     if (this.src() || this.currentSrc()) {
+      this.trigger('vjs-control-play');
       this.techCall_('play');
     } else {
       this.tech_.one('loadstart', function() {
@@ -1367,6 +1368,7 @@ class Player extends Component {
    * @method pause
    */
   pause() {
+    this.trigger('vjs-control-pause');
     this.techCall_('pause');
     return this;
   }
@@ -1428,6 +1430,7 @@ class Player extends Component {
   currentTime(seconds) {
     if (seconds !== undefined) {
 
+      this.trigger({type: 'vjs-control-seek', time: seconds});
       this.techCall_('setCurrentTime', seconds);
 
       return this;
